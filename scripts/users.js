@@ -4,7 +4,10 @@ $(document).ready(() => {
   const query = parseQueryString(window.location.search);
 
   $.get(`${API_URL}/users/${query.id}`, data => {
-    $('.user').append(`<h1>${data.name}</h1>`);
+    $('.user').append(`
+      <h1>${data.name}</h1>
+      <h2>${data.age}</h2>
+      `);
   });
 
 });
