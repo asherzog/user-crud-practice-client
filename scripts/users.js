@@ -3,15 +3,12 @@ const API_URL = 'http://localhost:3000'
 $(document).ready(() => {
   const query = parseQueryString(window.location.search);
 
-  $.get(`${API_URL}/users/${query.id}`, data => {
-    $('.user').append(`
-      <h1>${data.name}</h1>
-      <h2>${data.age}</h2>
-      `);
-  });
-
+  getUserInfo(query.id)
+    .then(addUserInfoToPage)
+    .then(getUserStickers)
+    .then(addStickersToPage)
+    .catch(noGood);
 });
-
 
 function parseQueryString(queryString) {
   let answer = {};
@@ -22,4 +19,33 @@ function parseQueryString(queryString) {
     answer[pair[0]] = pair[1];
   });
   return answer;
+}
+
+function getUserInfo(id) {
+  return $.get(`${API_URL}/users/${id}`);
+}
+
+function addUserInfoToPage(data) {
+  $('.user').append(`
+    <h1>${data.name}</h1>
+    <h2>${data.age}</h2>
+    `);
+  return data.id;
+}
+
+function getUserStickers(id) {
+  return $.get(`${API_URL}/users/${id}/sticker`);
+}
+
+function addStickersToPage(stickers) {
+  stickers.forEach(sticker => {
+    $('.stickers').append(`
+      <img src="${sticker.image_url}">
+      <p>${sticker.description}</p>
+      `);
+  });
+}
+
+function noGood(){
+  alert('No dice');
 }
