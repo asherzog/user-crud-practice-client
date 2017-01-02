@@ -1,3 +1,5 @@
+redirectIfLoggedIn();
+
 
 $(() => {
   $('form').submit((event) => {
@@ -6,8 +8,7 @@ $(() => {
 
     login(user)
       .then(result => {
-        console.log(result);
-        window.location = `/user.html?id=${result.id}`
+      setIdRedirect(result);
       }).catch(error => {
         console.error(error);
         showErrorMessage(error.responseJSON.message);

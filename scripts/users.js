@@ -5,7 +5,7 @@ $(document).ready(() => {
     .then(addUserInfoToPage)
     .then(getUserStickers)
     .then(addStickersToPage)
-    .catch(noGood);
+    .catch(handleError);
 });
 
 function parseQueryString(queryString) {
@@ -44,6 +44,6 @@ function addStickersToPage(stickers) {
   });
 }
 
-function noGood(){
-  alert('No dice');
+function handleError(error){
+  window.location = '/login.html';
 }

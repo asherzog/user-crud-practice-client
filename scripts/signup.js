@@ -1,3 +1,5 @@
+redirectIfLoggedIn();
+
 $(() => {
   $('form').submit((event) => {
     event.preventDefault();
@@ -7,7 +9,7 @@ $(() => {
     console.log(user);
     signup(user)
     .then(result => {
-      window.location = `/user.html?id=${result.id}`
+      setIdRedirect(result);
     }).catch(error => {
       console.error(error);
       showErrorMessage(error.responseJSON.message);
